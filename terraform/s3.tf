@@ -33,9 +33,9 @@ resource "aws_s3_bucket" "bucket2" {
 
 }
 
-resource "aws_s3_bucket_object" "index" {
-  key        = "index.html"
-  bucket     = "${aws_s3_bucket.bucket2.id}"
-  source     = "./index.html"
-  content_encoding = "text/html"
-}
+#resource "aws_s3_bucket_object" "index" {
+#  key        = "index.html"
+#  bucket     = "${aws_s3_bucket.bucket2.id}"
+#  source     = "./index.html"
+#  content_encoding = "text/html"
+#}
