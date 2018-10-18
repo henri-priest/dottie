@@ -12,13 +12,23 @@ terraform {
   }
 }
 
-resource "aws_s3_bucket" "bucket" {
+resource "aws_s3_bucket" "bucket1" {
   bucket = "dottie-test"
-  acl    = "private"
-
-  tags {
-    Name        = "Dottie"
-    Environment = "Dev"
-  }
 }
 
+resource "aws_s3_bucket" "bucket2" {
+  bucket = "www.dottie-test"
+
+  policy = "${file("policy.json")}"
+
+  website {
+    index_document = "index.html"
+  }
+
+}
+
+resource "aws_s3_bucket_object" "index" {
+  key        = "index.html"
+  bucket     = "${aws_s3_bucket.bucket2.id}"
+  source     = "../s3_static/index.html"
+}
