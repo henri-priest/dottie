@@ -4,6 +4,14 @@ provider "aws" {
   region                  = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "terraform-hmp"
+    key    = "dazzlingdottie/01"
+    region = "us-east-1"
+  }
+}
+
 resource "aws_s3_bucket" "bucket" {
   bucket = "dottie-test"
   acl    = "private"
