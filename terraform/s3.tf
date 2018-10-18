@@ -13,13 +13,19 @@ terraform {
 }
 
 resource "aws_s3_bucket" "bucket1" {
-  bucket = "dottie-test"
+  bucket = "dottie-test.com"
+  acl = "private"
+  policy = "${file("policy-raw.json")}"
+
+  website {
+    redirect_all_requests_to = "www.dottie-test.com"
+  }
 }
 
 resource "aws_s3_bucket" "bucket2" {
-  bucket = "www.dottie-test"
-
-  policy = "${file("policy.json")}"
+  bucket = "www.dottie-test.com"
+  acl = "private"
+  policy = "${file("policy-www.json")}"
 
   website {
     index_document = "index.html"
@@ -30,5 +36,6 @@ resource "aws_s3_bucket" "bucket2" {
 resource "aws_s3_bucket_object" "index" {
   key        = "index.html"
   bucket     = "${aws_s3_bucket.bucket2.id}"
-  source     = "../s3_static/index.html"
+  source     = "./index.html"
+  content_encoding = "text/html"
 }
